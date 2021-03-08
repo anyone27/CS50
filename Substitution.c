@@ -50,8 +50,8 @@ int main (int argc, string argv[])
         string cipher = NULL;
         for (int i = 0, n = strlen(plaintext); i < n; i++)
         {
-            string letter = tolower(plaintext[i]);
-            printf("Letter: %s\n", letter);
+            char letter = tolower(plaintext[i]);
+            printf("Letter: %c\n", letter);
             int digit = (int)letter - 97;
             cipher[i] = KEY[digit];
             printf("Ciphertext: %s\n", cipher);

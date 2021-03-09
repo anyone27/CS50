@@ -2,9 +2,10 @@
 #include <cs50.h>
 #include <string.h>
 #include <ctype.h>
-//#include <strings.h>
 
 char KEY[26];
+
+// string cipher(string word);
 
 int main (int argc, string argv[])
 {
@@ -18,7 +19,8 @@ int main (int argc, string argv[])
     else
     {
         string key = argv[1];
-        printf("User Key: %s\n", key);
+        // printf("User Key: %s\n", key);
+
         //TODO Validate Key
         // 26 alphabetic characters non-repeated
         if (strlen(key) == 26)
@@ -30,6 +32,19 @@ int main (int argc, string argv[])
                 {
                     KEY[i] = c;
                     // printf("KEY: %c\n", KEY[i]);
+                    int count = 26;
+
+                    for (int j = 0; j < count - 1; j++)
+                    {
+                        for (int k = j + 1; k < count; k++)
+                        {
+                            if (key[j] == key[k])
+                            {
+                                printf("Your key contains duplicate letters\n");
+                                return 1;
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -47,21 +62,25 @@ int main (int argc, string argv[])
         string plaintext = get_string("plaintext: ");
 
         //TODO Encipher string
-        string cipher = NULL;
         for (int i = 0, n = strlen(plaintext); i < n; i++)
         {
-            char letter = tolower(plaintext[i]);
-            printf("Letter: %c\n", letter);
-            int digit = (int)letter - 97;
-            cipher[i] = KEY[digit];
-            printf("Ciphertext: %s\n", cipher);
-            printf("Ciphertext character: %c\n", (char) cipher);
+            char c = plaintext[i];
+            if (isalpha(c))
+            {
+                if (isupper(c))
+                {
+                    int digit = (int) c - 65;
+                    plaintext[i] = toupper(KEY[digit]);
+                }
+                else
+                {
+                    int digit = (int) c - 97;
+                    plaintext[i] = tolower(KEY[digit]);
+                }
+            }
         }
-        // string ciphertext = cipher(plaintext);
-
         //TODO Print ciphertext
-        printf("Ciphertext: %s\n", cipher);
-        // return cipher;
-        return 0;
+        printf("ciphertext: %s\n", plaintext);
     }
+    return 0;
 }
